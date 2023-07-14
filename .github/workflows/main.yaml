@@ -1,1 +1,25 @@
+name: Django
+on: 
+  push:
+    branches:
+    - main
 
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    steps:
+      - run: echo "This is a build step"
+  test:
+    runs-on: ubuntu-20.04
+    steps:
+      - run: echo "This is a build step"
+
+  integration:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "This is an integration step"
+      - run: exit 1
+  prod:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "This is a deploy step"
