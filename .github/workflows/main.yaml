@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest # similar to "image" in GitLab
+    runs-on: ubuntu-20.04 # similar to "image" in GitLab
     steps:
       - uses: actions/checkout@v2 # similar to "image" in GitLab
       
@@ -24,7 +24,7 @@ jobs:
           python manage.py check
   
   test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     needs: build
     steps:
       - uses: actions/checkout@v2
@@ -42,7 +42,7 @@ jobs:
           python manage.py test taskManager
   
   sca:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     needs: test
     steps:
       - uses: actions/checkout@v2
@@ -58,7 +58,7 @@ jobs:
 
   
   secret_scanning:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     needs: sca
     steps:
       - uses: actions/checkout@v2
@@ -73,7 +73,7 @@ jobs:
         if: always()
 
   sast:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     needs: secret_scanning
     steps:
       - uses: actions/checkout@v2
@@ -90,7 +90,7 @@ jobs:
 
 
   integration:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     needs: sast
     steps:
       - run: echo "This is an integration step"
@@ -98,7 +98,7 @@ jobs:
         continue-on-error: true
   
   prod:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     needs: integration
     steps:
       - run: echo "This is a deploy step."
