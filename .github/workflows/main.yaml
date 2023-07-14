@@ -88,10 +88,23 @@ jobs:
           path: bandit-output.json
         if: always()
 
+  zap_baseline:
+    runs-on: ubuntu-20.04
+    needs: sast
+    steps:
+      - run: |
+          docker pull owasp/zap2docker-stable:2.10.0
+          docker run --user root --rm -v $(pwd):/zap/wrk:rw -w /zap owasp/zap2docker-stable:2.10.0 zap-baseline.py -t ${{ secrets.PROD_URL }} -J zap-output.json
+      
+      - uses: actions/upload-artifact@v2
+        with:
+          name: ZAP Scan
+          path: zap-output.json
+        if: always()
 
   integration:
     runs-on: ubuntu-20.04
-    needs: sast
+    needs: sca
     steps:
       - run: echo "This is an integration step"
       - run: exit 1
